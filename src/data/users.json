@@ -1,0 +1,20 @@
+[
+  {
+    "id": "99720171-8dbf-4664-a9ac-f9e7d7492239",
+    "username": "simple",
+    "password": "simple123",
+    "role": "ROLE_SIMPLE"
+  },
+  {
+    "id": "53b657db-c610-4a2a-8425-61df84b11103",
+    "username": "admin",
+    "password": "admin123",
+    "role": "ROLE_ADMIN"
+  },
+  {
+    "id": "9ddbeba9-0032-4c48-b69a-d5259a0c88df",
+    "username": "superAdmin",
+    "password": "superAdmin123",
+    "role": "ROLE_SUPER_ADMIN"
+  }
+]

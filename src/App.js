@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import {CLIENTS_DATA, USERS_DATA} from "./tools/constants";
+import data from "./data/users";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import Login from "./pages/Login";
+import {updateState} from "./redux/actions/userAction";
+import {connect} from "react-redux";
+import {ToastContainer} from "react-toastify";
+import AdminLayout from "./components/AdminLayout";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = (props) => {
+    useEffect(() => {
+        if (localStorage.getItem(USERS_DATA) == null) {
+            localStorage.setItem(USERS_DATA, JSON.stringify(data));
+        }
+        if (localStorage.getItem(CLIENTS_DATA) == null) {
+            localStorage.setItem(CLIENTS_DATA, JSON.stringify([]));
+        }
+        props.updateState({
+            users: JSON.parse(localStorage.getItem(USERS_DATA)),
+            clients: JSON.parse(localStorage.getItem(CLIENTS_DATA)),
+            filteredClients: JSON.parse(localStorage.getItem(CLIENTS_DATA)),
+        })
+    }, []);
 
-export default App;
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route path="/" component={Login} exact/>
+                <Route path="/simple" component={AdminLayout}/>
+                <Route path="/admin" component={AdminLayout}/>
+                <Route path="/superadmin" component={AdminLayout}/>
+            </Switch>
+            <ToastContainer/>
+        </BrowserRouter>
+    );
+};
+
+export default connect(null, {updateState})(App);
